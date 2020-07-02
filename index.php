@@ -3,11 +3,13 @@
     require 'service/partidos_service.php';
     require 'service/noticias_service.php';
     require 'service/torneos_service.php';
+    require 'service/participa_service.php';
     
     $server = new soap_server();
     $URL       = "example.com";
     $namespace = $URL . '?wsdl';
     $server->configureWSDL('soap-soccer', $namespace);
+    
     
     $server->wsdl->addComplexType(
         'equipos',
@@ -52,7 +54,7 @@
     );
 
     $server->register(
-        'consultarNoticia',
+        'noticiaConsultar',
         array('idNoticia' => 'xsd:integer'),
         array('return'=>'tns:noticia'),
         'urn:NoticiaXMLwsdl', // Nombre del workspace
@@ -64,7 +66,7 @@
 
     // Agregar Noticia
     $server->register(
-        'agregarNoticia',
+        'noticiaAgregar',
         array('autor' => 'xsd:string', 'fecha' => 'sxd:string', 'titulo' => 'xsd:string', 'cuerpo' => 'xsd:string', 'idTorneo' => 'xsd:integer'),
         array('mensaje'=>'xsd:string'),
         'urn:NoticiaXMLwsdl', // Nombre del workspace
@@ -76,7 +78,7 @@
 
     // Actualizar Noticia
     $server->register(
-        'actualizarNoticia',
+        'noticiaActualizar',
         array('idNoticia' => 'xsd:integer','autor' => 'xsd:string', 'fecha' => 'sxd:string', 'titulo' => 'xsd:string', 'cuerpo' => 'xsd:string', 'idTorneo' => 'xsd:integer'),
         array('mensaje'=>'xsd:string'),
         'urn:NoticiaXMLwsdl', // Nombre del workspace
@@ -88,7 +90,7 @@
 
     // Eliminar Noticia
     $server->register(
-        'eliminarNoticia',
+        'noticiaEliminar',
         array('idNoticia' => 'xsd:integer'),
         array('mensaje'=>'xsd:string'),
         'urn:NoticiaXMLwsdl', // Nombre del workspace
@@ -114,7 +116,7 @@
     );
 
     $server->register(
-        'consultarTorneo',
+        'torneoConsultar',
         array('idTorneo' => 'xsd:integer'),
         array('return'=>'tns:torneo'),
         'urn:TorneoXMLwsdl', // Nombre del workspace
@@ -126,7 +128,7 @@
 
     // Agregar Torneo
     $server->register(
-        'agregarTorneo',
+        'torneoAgregar',
         array('nombre' => 'xsd:string', 'fechaIncial' => 'sxd:string', 'fechaFinal' => 'xsd:string'),
         array('mensaje'=>'xsd:string'),
         'urn:TorneoXMLwsdl', // Nombre del workspace
@@ -138,7 +140,7 @@
 
     // Actualizar Torneo
     $server->register(
-        'actualizarTorneo',
+        'torneoActualizar',
         array('idTorneo' => 'xsd:integer','nombre' => 'xsd:string', 'fechaIncial' => 'sxd:string', 'fechaFinal' => 'xsd:string'),
         array('mensaje'=>'xsd:string'),
         'urn:TorneoXMLwsdl', // Nombre del workspace
@@ -150,14 +152,150 @@
 
     // Eliminar Torneo
     $server->register(
-        'eliminarTorneo',
+        'torneoEliminar',
         array('idTorneo' => 'xsd:integer'),
         array('mensaje'=>'xsd:string'),
         'urn:TorneoXMLwsdl', // Nombre del workspace
-        'urn:TorneoXMLwsdl#consultar', // Acción soap
+        'urn:TorneoXMLwsdl#eliminar', // Acción soap
         'rpc', // Estilo
         'encoded', // Uso
         'Eliminar un torneo' // Documentación
     );
+
+    // --------------------------------------------- PARTIDOS --------------------------------------------- //
+
+    // Agregar Partido
+    $server->register(
+        'partidoAgregar',
+        array('golesLocal' => 'xsd:integer','golesVisitante'=> 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:PartidosXMLwsdl', // Nombre del workspace
+        'urn:PartidosXMLwsdl#createPartido', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Crear un partido' // Documentación
+    );
+
+    // Actualizar Partido
+    $server->register(
+        'partidoActualizar',
+        array('id' => 'xsd:integer','golesLocal' => 'xsd:integer','golesVisitante'=> 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:PartidosXMLwsdl', // Nombre del workspace
+        'urn:PartidosXMLwsdl#actualizar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Actualizar Partido' // Documentación
+    );
+
+    // Consultar Partido
+    $server->wsdl->addComplexType(
+        'partido',
+        'complextType',
+        'struct',
+        'sequence',
+        '',
+        array(
+            'ID' => array('name' => 'ID', 'type' => 'xsd:integer'),
+            'GOLES_LOCAL' => array('name' => 'GOLES_LOCAL', 'type' => 'xsd:integer'),
+            'GOLES_VISITANTE' => array('name' => 'GOLES_VISITANTE', 'type' => 'xsd:integer')
+        )
+    );
+    
+    $server->register(
+        'partidoConsultar',
+        array('id' => 'xsd:integer'),
+        array('return'=>'tns:partido'),
+        'urn:PartidosXMLwsdl', // Nombre del workspace
+        'urn:PartidosXMLwsdl#consultar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Consultar Partido' // Documentación
+    );
+
+
+    // Eliminar Partido
+
+    $server->register(
+        'partidoEliminar',
+        array('id' => 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:PartidosXMLwsdl', // Nombre del workspace
+        'urn:PartidosXMLwsdl#eliminar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Actualizar Partido' // Documentación
+    );
+
+     // --------------------------------------------- PARTICIPA --------------------------------------------- //
+
+    // Crear Participa
+    $server->register(
+        'participaAgregar',
+        array('id_partido' => 'xsd:integer','id_equipo'=> 'xsd:integer','id_torneo'=> 'xsd:integer','visitante'=>'xsd:boolean','contrincante'=> 'xsd:integer','puntos'=> 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:ParticipaXMLwsdl', // Nombre del workspace
+        'urn:ParticipaXMLwsdl#agregar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Crear una participación' // Documentación
+    );
+
+    // Actualizar Participa
+    $server->register(
+        'participaActualizar',
+        array( 'id_partido_old' => 'xsd:integer','id_equipo_old'=> 'xsd:integer','id_torneo_old'=> 'xsd:integer','id_partido' => 'xsd:integer','id_equipo'=> 'xsd:integer','id_torneo'=> 'xsd:integer','visitante'=>'xsd:boolean','contrincante'=> 'xsd:integer','puntos'=> 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:ParticipaXMLwsdl', // Nombre del workspace
+        'urn:ParticipaXMLwsdl#actualizar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Actualizar una participación' // Documentación
+    );
+
+    // Consultar Participa
+
+    $server->wsdl->addComplexType(
+        'particpa',
+        'complextType',
+        'struct',
+        'sequence',
+        '',
+        array(
+            'ID_PARTIDO'      => array('name' => 'ID_PARTIDO',     'type' => 'xsd:integer'),
+            'ID_EQUIPO'       => array('name' => 'ID_EQUIPO' ,     'type' => 'xsd:integer'),   
+            'ID_TORNEO'       => array('name' => 'ID_TORNEO' ,     'type' => 'xsd:integer'),   
+            'VISITANTE'       => array('name' => 'VISITANTE' ,     'type' => 'xsd:integer'),   
+            'CONTRINCANTE'    => array('name' => 'CONTRINCANTE',   'type' => 'xsd:integer'),
+            'PUNTOS'          => array('name' => 'PUNTOS',         'type' => 'xsd:integer'),
+        )
+    );
+
+    $server->register(
+        'participaConsultar',
+        array('id_partido' => 'xsd:integer','id_equipo'=> 'xsd:integer','id_torneo'=> 'xsd:integer'),
+        array('return'=>'tns:particpa'),
+        'urn:ParticipaXMLwsdl', // Nombre del workspace
+        'urn:ParticipaXMLwsdl#consultar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Consultar una participación' // Documentación
+    );
+
+    // Eliminar Participa
+    $server->register(
+        'participaEliminar',
+        array('id_partido' => 'xsd:integer','id_equipo'=> 'xsd:integer','id_torneo'=> 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:ParticipaXMLwsdl', // Nombre del workspace
+        'urn:ParticipaXMLwsdl#eliminar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Eliminar una participación' // Documentación
+    );
+
+
+
     $server->service(file_get_contents("php://input"));
+    
 ?>

@@ -4,7 +4,7 @@
     /**
      * Metodo para consultar la informacion de una noticia en especifico
      */
-    function consultarTorneo($idTorneo){
+    function torneoConsultar($idTorneo){
         global $mysqli;
 
         $sql = "SELECT * FROM TORNEO WHERE ID = ".$idTorneo;
@@ -20,7 +20,7 @@
     /**
      * Metodo para agregar una Torneo
      */
-    function agregarTorneo($nombre, $fechaIncial, $fechaFinal){
+    function torneoAgregar($nombre, $fechaIncial, $fechaFinal){
         global $mysqli;
 
         $sql = "INSERT INTO TORNEO (ID,NOMBRE,FECHA_INICIAL, FECHA_FINAL) VALUES(NULL,'$nombre', '$fechaIncial', '$fechaFinal')";
@@ -36,7 +36,7 @@
     /**
      * Metodo para actualizar la informacion de una Torneo
      */
-    function actualizarTorneo($idTorneo, $nombre, $fechaIncial, $fechaFinal){
+    function torneoActualizar($idTorneo, $nombre, $fechaIncial, $fechaFinal){
         global $mysqli;
 
         $sql = "UPDATE TORNEO SET NOMBRE='$nombre', FECHA_INICIAL='$fechaIncial',FECHA_FINAL='$fechaFinal' WHERE ID = $idTorneo";
@@ -52,7 +52,7 @@
     /**
      * Metodo para eliminar una Torneo
      */
-    function eliminarTorneo($idTorneo){
+    function torneoEliminar($idTorneo){
         global $mysqli;
 
         $sql = "DELETE FROM TORNEO WHERE ID = ".$idTorneo;

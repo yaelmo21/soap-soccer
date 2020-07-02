@@ -4,7 +4,7 @@
     /**
      * Metodo para consultar la informacion de una noticia en especifico
      */
-    function consultarNoticia($idNoticia){
+    function noticiaConsultar($idNoticia){
         global $mysqli;
 
         $sql = "SELECT * FROM NOTICIA WHERE ID = ".$idNoticia;
@@ -20,7 +20,7 @@
     /**
      * Metodo para agregar una noticia
      */
-    function agregarNoticia($autor, $fecha, $titulo, $cuerpo, $idTorneo){
+    function noticiaAgregar($autor, $fecha, $titulo, $cuerpo, $idTorneo){
         global $mysqli;
 
         $sql = "INSERT INTO NOTICIA (ID,AUTOR,FECHA, TITULO, CUERPO, ID_TORNEO) VALUES(NULL,'$autor', '$fecha', '$titulo', '$cuerpo', '$idTorneo')";
@@ -36,7 +36,7 @@
     /**
      * Metodo para actualizar la informacion de una noticia
      */
-    function actualizarNoticia($idNoticia, $autor, $fecha, $titulo, $cuerpo, $idTorneo){
+    function noticiaActualizar($idNoticia, $autor, $fecha, $titulo, $cuerpo, $idTorneo){
         global $mysqli;
 
         $sql = "UPDATE NOTICIA SET AUTOR='$autor', FECHA='$fecha',TITULO='$titulo',CUERPO='$cuerpo', ID_TORNEO=$idTorneo WHERE ID = $idNoticia";
@@ -52,7 +52,7 @@
     /**
      * Metodo para eliminar una noticia
      */
-    function eliminarNoticia($idNoticia){
+    function noticiaEliminar($idNoticia){
         global $mysqli;
 
         $sql = "DELETE FROM NOTICIA WHERE ID = ".$idNoticia;

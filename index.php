@@ -4,6 +4,8 @@
     require 'service/noticias_service.php';
     require 'service/torneos_service.php';
     require 'service/participa_service.php';
+    require 'service/jugadores_service.php';
+    require 'service/equipos_service.php';
     
     $server = new soap_server();
     $URL       = "example.com";
@@ -294,7 +296,139 @@
         'Eliminar una participación' // Documentación
     );
 
+   // --------------------------------------------- JUGADORES --------------------------------------------- //
 
+    // Agregar Jugador
+    $server->register(
+        'jugadorAgregar',
+        array('nombre' => 'xsd:string','apellido'=> 'xsd:string','nickname' => 'xsd:string','fecha_nacimiento'=> 'xsd:string','posicion' => 'xsd:string','id_equipo'=> 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:JugadoresXMLwsdl', // Nombre del workspace
+        'urn:JugadoresXMLwsdl#createJugador', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Crear un jugador' // Documentación
+    );
+
+    // Actualizar Jugador
+    $server->register(
+        'jugadorActualizar',
+        array('id' => 'xsd:integer','nombre' => 'xsd:string','apellido'=> 'xsd:string','nickname' => 'xsd:string','fecha_nacimiento'=> 'xsd:string','posicion' => 'xsd:string','id_equipo'=> 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:JugadoresXMLwsdl', // Nombre del workspace
+        'urn:JugadoresXMLwsdl#actualizar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Actualizar Jugador' // Documentación
+    );
+
+    // Consultar Jugador
+    $server->wsdl->addComplexType(
+        'jugador',
+        'complextType',
+        'struct',
+        'sequence',
+        '',
+        array(
+            'ID' => array('name' => 'ID', 'type' => 'xsd:integer'),
+            'NOMBRE' => array('name' => 'NOMBRE', 'type' => 'xsd:string'),
+            'APELLIDO' => array('name' => 'APELLIDO', 'type' => 'xsd:string'),
+            'NICKNAME' => array('name' => 'NICKNAME', 'type' => 'xsd:string'),
+            'FECHA_NACIMIENTO' => array('name' => 'FECHA_NACIMIENTO', 'type' => 'xsd:string'),
+            'POSICION' => array('name' => 'POSICION', 'type' => 'xsd:string'),
+            'ID_EQUIPO' => array('name' => 'ID_EQUIPO', 'type' => 'xsd:integer')
+        )
+    );
+    
+    $server->register(
+        'jugadorConsultar',
+        array('id' => 'xsd:integer'),
+        array('return'=>'tns:jugador'),
+        'urn:JugadoresXMLwsdl', // Nombre del workspace
+        'urn:JugadoresXMLwsdl#consultar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Consultar Jugador' // Documentación
+    );
+
+
+    // Eliminar Jugador
+
+    $server->register(
+        'jugadorEliminar',
+        array('id' => 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:JugadoresXMLwsdl', // Nombre del workspace
+        'urn:JugadoresXMLwsdl#eliminar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Actualizar Jugador' // Documentación
+    );
+
+     // --------------------------------------------- EQUIPOS --------------------------------------------- //
+
+    // Agregar Equipo
+    $server->register(
+        'equipoAgregar',
+        array('nombre' => 'xsd:string','entrenador'=> 'xsd:string'),
+        array('mensaje'=>'xsd:string'),
+        'urn:EquiposXMLwsdl', // Nombre del workspace
+        'urn:EquiposXMLwsdl#createJugador', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Crear un equipo' // Documentación
+    );
+
+    // Actualizar Equipo
+    $server->register(
+        'equipoActualizar',
+        array('id' => 'xsd:integer','nombre' => 'xsd:string','entrenador'=> 'xsd:string'),
+        array('mensaje'=>'xsd:string'),
+        'urn:EquiposXMLwsdl', // Nombre del workspace
+        'urn:EquiposXMLwsdl#actualizar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Actualizar equipo' // Documentación
+    );
+
+    // Consultar Equipo
+    $server->wsdl->addComplexType(
+        'equipo',
+        'complextType',
+        'struct',
+        'sequence',
+        '',
+        array(
+            'ID' => array('name' => 'ID', 'type' => 'xsd:integer'),
+            'NOMBRE' => array('name' => 'NOMBRE', 'type' => 'xsd:string'),
+            'ENTRENADOR' => array('name' => 'ENTRENADOR', 'type' => 'xsd:string'),
+        )
+    );
+    
+    $server->register(
+        'equipoConsultar',
+        array('id' => 'xsd:integer'),
+        array('return'=>'tns:equipo'),
+        'urn:EquiposXMLwsdl', // Nombre del workspace
+        'urn:EquiposXMLwsdl#consultar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Consultar Equipo' // Documentación
+    );
+
+
+    // Eliminar Equipo
+
+    $server->register(
+        'equipoEliminar',
+        array('id' => 'xsd:integer'),
+        array('mensaje'=>'xsd:string'),
+        'urn:EquiposXMLwsdl', // Nombre del workspace
+        'urn:EquiposXMLwsdl#eliminar', // Acción soap
+        'rpc', // Estilo
+        'encoded', // Uso
+        'Eliminar Equipo' // Documentación
+    );
 
     $server->service(file_get_contents("php://input"));
     

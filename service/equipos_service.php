@@ -18,10 +18,10 @@
     // Crear Equipo
     // ---------------------------------------------------------------------------------
 
-    function equipoAgregar($nombre, $entrenador){
+    function equipoAgregar($nombre, $entrenador,$slogan){
        global $mysqli;
        $id_equipo = intval($id_equipo);
-       $sql = "INSERT INTO EQUIPO (ID,NOMBRE,ENTRENADOR) values (NULL,'$nombre','$entrenador')";
+       $sql = "INSERT INTO EQUIPO (ID,NOMBRE,ENTRENADOR,SLOGAN) values (NULL,'$nombre','$entrenador','$slogan')";
        return ($mysqli->query($sql))? 'Exito' : $sql;
     }
 
@@ -29,10 +29,10 @@
     // Actualizar Equipo
     // ---------------------------------------------------------------------------------
     
-    function equipoActualizar($id, $nombre, $entrenador){
+    function equipoActualizar($id, $nombre, $entrenador,$slogan){
         global $mysqli;
         
-        $sql = "UPDATE EQUIPO SET NOMBRE='$nombre', ENTRENADOR='$entrenador' WHERE ID = $id";
+        $sql = "UPDATE EQUIPO SET NOMBRE='$nombre', ENTRENADOR='$entrenador', SLOGAN='$slogan' WHERE ID = $id";
         return ($mysqli->query($sql))? 'Exito' : 'Error';
     }
     // ---------------------------------------------------------------------------------

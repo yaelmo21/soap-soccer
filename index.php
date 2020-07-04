@@ -370,7 +370,7 @@
     // Agregar Equipo
     $server->register(
         'equipoAgregar',
-        array('nombre' => 'xsd:string','entrenador'=> 'xsd:string'),
+        array('nombre' => 'xsd:string','entrenador'=> 'xsd:string','slogan'=>'xsd:string'),
         array('mensaje'=>'xsd:string'),
         'urn:EquiposXMLwsdl', // Nombre del workspace
         'urn:EquiposXMLwsdl#createJugador', // Acción soap
@@ -382,7 +382,7 @@
     // Actualizar Equipo
     $server->register(
         'equipoActualizar',
-        array('id' => 'xsd:integer','nombre' => 'xsd:string','entrenador'=> 'xsd:string'),
+        array('id' => 'xsd:integer','nombre' => 'xsd:string','entrenador'=> 'xsd:string','slogan'=>'xsd:string'),
         array('mensaje'=>'xsd:string'),
         'urn:EquiposXMLwsdl', // Nombre del workspace
         'urn:EquiposXMLwsdl#actualizar', // Acción soap
@@ -402,6 +402,7 @@
             'ID' => array('name' => 'ID', 'type' => 'xsd:integer'),
             'NOMBRE' => array('name' => 'NOMBRE', 'type' => 'xsd:string'),
             'ENTRENADOR' => array('name' => 'ENTRENADOR', 'type' => 'xsd:string'),
+            'SLOGAN' => array('name' => 'SLOGAN', 'type' => 'xsd:string'),
         )
     );
     

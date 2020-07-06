@@ -22,7 +22,7 @@
        global $mysqli;
        $id_equipo = intval($id_equipo);
        $sql = "INSERT INTO EQUIPO (ID,NOMBRE,ENTRENADOR,SLOGAN) values (NULL,'$nombre','$entrenador','$slogan')";
-       return ($mysqli->query($sql))? 'Exito' : $sql;
+       return ($mysqli->query($sql))? strval($mysqli->insert_id) : 'ERROR';
     }
 
     // ---------------------------------------------------------------------------------

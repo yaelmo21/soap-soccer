@@ -18,9 +18,9 @@
     // Crear Partido
     // ---------------------------------------------------------------------------------
     
-    function partidoAgregar($golesLocal,$golesVisitante){
+    function partidoAgregar($golesLocal,$golesVisitante,$fecha){
        global $mysqli;
-       $sql = "INSERT INTO PARTIDO (ID,GOLES_LOCAL,GOLES_VISITANTE) value (NULL,$golesLocal,$golesVisitante)";
+       $sql = "INSERT INTO PARTIDO (ID,GOLES_LOCAL,GOLES_VISITANTE,FECHA) value (NULL,$golesLocal,$golesVisitante,'$fecha')";
        return ($mysqli->query($sql))? 'Exito' : 'Error';
     }
 
@@ -28,9 +28,9 @@
     // Actualizar Partido
     // ---------------------------------------------------------------------------------
     
-    function partidoActualizar($id,$golesLocal,$golesVisitante){
+    function partidoActualizar($id,$golesLocal,$golesVisitante,$fecha){
         global $mysqli;
-        $sql = "UPDATE PARTIDO SET GOLES_LOCAL=$golesLocal,GOLES_VISITANTE=$golesVisitante WHERE ID= $id";
+        $sql = "UPDATE PARTIDO SET GOLES_LOCAL=$golesLocal,GOLES_VISITANTE=$golesVisitante, FECHA='$fecha' WHERE ID= $id";
         return ($mysqli->query($sql))? 'Exito' : 'Error';
     }
     // ---------------------------------------------------------------------------------

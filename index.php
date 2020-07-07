@@ -169,7 +169,7 @@
     // Agregar Partido
     $server->register(
         'partidoAgregar',
-        array('golesLocal' => 'xsd:integer','golesVisitante'=> 'xsd:integer'),
+        array('golesLocal' => 'xsd:integer','golesVisitante'=> 'xsd:integer','fecha'=>'xsd:string'),
         array('mensaje'=>'xsd:string'),
         'urn:PartidosXMLwsdl', // Nombre del workspace
         'urn:PartidosXMLwsdl#createPartido', // Acción soap
@@ -181,7 +181,7 @@
     // Actualizar Partido
     $server->register(
         'partidoActualizar',
-        array('id' => 'xsd:integer','golesLocal' => 'xsd:integer','golesVisitante'=> 'xsd:integer'),
+        array('id' => 'xsd:integer','golesLocal' => 'xsd:integer','golesVisitante'=> 'xsd:integer','fecha'=>'xsd:string'),
         array('mensaje'=>'xsd:string'),
         'urn:PartidosXMLwsdl', // Nombre del workspace
         'urn:PartidosXMLwsdl#actualizar', // Acción soap
@@ -200,7 +200,8 @@
         array(
             'ID' => array('name' => 'ID', 'type' => 'xsd:integer'),
             'GOLES_LOCAL' => array('name' => 'GOLES_LOCAL', 'type' => 'xsd:integer'),
-            'GOLES_VISITANTE' => array('name' => 'GOLES_VISITANTE', 'type' => 'xsd:integer')
+            'GOLES_VISITANTE' => array('name' => 'GOLES_VISITANTE', 'type' => 'xsd:integer'),
+            'FECHA' => array('name' => 'FECHA', 'type' => 'xsd:string'),
         )
     );
     
